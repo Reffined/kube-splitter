@@ -23,13 +23,37 @@ func main() {
 		}
 		kindAny := obj["kind"]
 		kind := kindAny.(string)
-		file, err := os.Create(fmt.Sprintf("%s.yaml", kind))
+		fileName := fmt.Sprintf("%s.yaml", kind)
+		//_, err = os.Stat(fileName)
+		//if err != nil {
+		//	if os.IsNotExist(err) {
+		//		file, err := os.Create(fileName)
+		//		if err != nil {
+		//			panic(err)
+		//		}
+		//		_, err = file.WriteString(v)
+		//		if err != nil {
+		//			panic(err)
+		//		}
+		//		file.Close()
+		//		continue
+		//	}
+		//}
+		file, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0666)
 		if err != nil {
+			panic(err)
+		}
+
+		_, err = file.WriteString("---\n")
+		if err != nil {
+			file.Close()
 			panic(err)
 		}
 		_, err = file.WriteString(v)
 		if err != nil {
+			file.Close()
 			panic(err)
 		}
+		file.Close()
 	}
 }
