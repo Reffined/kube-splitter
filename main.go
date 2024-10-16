@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -9,9 +10,9 @@ import (
 )
 
 func main() {
-	args := os.Args
-	filePath := args[1]
-	content, err := os.ReadFile(filePath)
+	filePath := flag.String("p", "", "kube-splitter -p <path to yaml file>")
+	flag.Parse()
+	content, err := os.ReadFile(*filePath)
 	if err != nil {
 		panic(err)
 	}
