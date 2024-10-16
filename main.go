@@ -1,18 +1,16 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"strings"
 
+	"github.com/neovim/go-client/nvim/plugin"
 	"gopkg.in/yaml.v2"
 )
 
-func main() {
-	filePath := flag.String("p", "", "kube-splitter -p <path to yaml file>")
-	flag.Parse()
-	content, err := os.ReadFile(*filePath)
+func Split(args []string) {
+	content, err := os.ReadFile(args[0])
 	if err != nil {
 		panic(err)
 	}
@@ -44,4 +42,11 @@ func main() {
 		}
 		file.Close()
 	}
+}
+
+func main() {
+	plugin.Main(func(p *plugin.Plugin) error {
+		p.HandleFunction(&plugin.FunctionOptions{Name: "KubeSplit"}, Split)
+		return nil
+	})
 }
