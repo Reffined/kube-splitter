@@ -1,4 +1,4 @@
-module kube-splitter
+module github.com/Reffined/kube-splitter
 
 go 1.21.9
 
