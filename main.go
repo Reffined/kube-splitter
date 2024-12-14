@@ -14,7 +14,9 @@ func main() {
 	flag.Parse()
 	content, err := os.ReadFile(*filePath)
 	if err != nil {
-		panic(err)
+		if *filePath == "" {
+			fmt.Println("kube-splitter -p <path to yaml file>")
+		}
 	}
 	ymls := strings.Split(string(content), "---")
 	for _, v := range ymls {
