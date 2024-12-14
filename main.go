@@ -16,6 +16,7 @@ func main() {
 	if err != nil {
 		if *filePath == "" {
 			fmt.Println("kube-splitter -p <path to yaml file>")
+			return
 		}
 	}
 	ymls := strings.Split(string(content), "---")
